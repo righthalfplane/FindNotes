@@ -25,8 +25,8 @@ bool MyApp::OnInit()
     return true;
 }
 
-//#define CONSOLE22
-#ifdef CONSOLE22
+
+#ifdef WIN64
 int main(int, char**)                                           
 {                                                                
     wxDISABLE_DEBUG_SUPPORT();                                   

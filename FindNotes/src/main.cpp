@@ -8,7 +8,7 @@
 //c++ -std=c++11 -o FindNotes.x main.cpp notes.cpp Poly.cpp -lrtaudio  -lfftw3  -lfftw3f `wx-config --cxxflags --libs --gl-libs`
 
 
-char *ProgramVersion=(char *)"FindNotes-098";
+char *ProgramVersion=(char *)"FindNotes-107";
 
 char WarningBuff[256];
 

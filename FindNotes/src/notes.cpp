@@ -534,9 +534,14 @@ Buttons::Buttons(const wxString& title)
  	start = new wxButton(this, BUTTON_START_NOTE, wxT("Start Note"), wxPoint(30, 170),wxSize(100, 25));
  	
  	stop = new wxButton(this, BUTTON_STOP_NOTE, wxT("Stop Note"), wxPoint(30, 200),wxSize(100, 25));
-	
+ 	
+#ifdef BREW
+	combo = new wxComboBox(this,ID_COMBOBOX,wxT("Instrument"),
+	 			wxPoint(30, 230),wxSize(100, 20),strings,wxITEM_DROPDOWN);
+#else
 	combo = new wxComboBox(this,ID_COMBOBOX,wxT("Instrument"),
 	 			wxPoint(30, 230),wxSize(100, 22),strings,wxITEM_DROPDOWN);
+#endif
 	 			
 	combo->SetSelection(0);
 	

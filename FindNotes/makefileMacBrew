@@ -1,0 +1,11 @@
+CXXFLAGS =  -std=c++11 -O2  -I/opt/homebrew/include -I./src/ `/opt/homebrew/bin/wx-config  --cxxflags` -Wall -DBREW=5
+
+CCFILES= ./src/main.cpp ./src/notes.cpp ./src/Poly.cpp
+ 
+CCOBJS = ./src/main.o ./src/notes.o ./src/Poly.o
+
+notesall:  ${COBJS} ${CCOBJS}
+	${CXX} ${CFLAGS} -o FindNotes.x ${COBJS} ${CCOBJS}   -lGLEW `/opt/homebrew/bin/wx-config   --libs --gl-libs` -lfftw3 -lfftw3f -lrtaudio -lsndfile -lliquid
+	rm ./src/main.o ./src/notes.o ./src/Poly.o
+
+

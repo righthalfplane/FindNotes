@@ -155,15 +155,15 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\main.cpp" />
-    <ClCompile Include="..\notes.cpp" />
-    <ClCompile Include="..\Poly.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\notes.cpp" />
+    <ClCompile Include="..\src\Poly.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\main.h" />
-    <ClInclude Include="..\notes.h" />
-    <ClInclude Include="..\notesTable.h" />
-    <ClInclude Include="..\Poly.h" />
+    <ClInclude Include="..\src\main.h" />
+    <ClInclude Include="..\src\notes.h" />
+    <ClInclude Include="..\src\notesTable.h" />
+    <ClInclude Include="..\src\Poly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

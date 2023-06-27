@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\main.cpp">
+    <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\notes.cpp">
+    <ClCompile Include="..\src\notes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Poly.cpp">
+    <ClCompile Include="..\src\Poly.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\main.h">
+    <ClInclude Include="..\src\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\notes.h">
+    <ClInclude Include="..\src\notes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\notesTable.h">
+    <ClInclude Include="..\src\notesTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Poly.h">
+    <ClInclude Include="..\src\Poly.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

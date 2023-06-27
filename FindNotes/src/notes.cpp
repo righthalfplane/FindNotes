@@ -512,7 +512,7 @@ Buttons::Buttons(const wxString& title)
     info = new wxButton(this, BUTTON_INFORMATION, wxT("Information"), wxPoint(30, 50),wxSize(100, 25));
 	
 
-     stext=new wxStaticText(this,wxID_STATIC,wxT("Notes: (A0-C8)"),
+     stext=new wxStaticText(this,wxID_STATIC,wxT("Notes:(A0-C8)"),
           wxPoint(30, 80), wxSize(100, 22),wxALIGN_LEFT);
           
           
@@ -554,11 +554,11 @@ Buttons::Buttons(const wxString& title)
 
     wxMenu *inputMenu = new wxMenu;
     
-    for(long int n=0;n<inputNames.size();++n){
+    for(unsigned long int n=0;n<inputNames.size();++n){
         wxMenu *subMenu = new wxMenu;
         inputMenu->AppendSubMenu(subMenu, inputNames[n].name, wxT("Description?"));
         //int deviceID=inputNames[n].deviceID;
-        for(long int k=0;k<inputNames[n].sampleRate.size();++k){
+        for(unsigned long int k=0;k<inputNames[n].sampleRate.size();++k){
             std::stringstream srateName;
             srateName << ((float) (inputNames[n].sampleRate[k]) / 1000.0f) << "kHz";
             itm = subMenu->AppendRadioItem(INPUT_MENU + 10*n + k, srateName.str(), wxT("Description?"));
@@ -566,7 +566,7 @@ Buttons::Buttons(const wxString& title)
     }
    
     wxMenu *outputMenu = new wxMenu;
-    for(long int n=0;n<outputNames.size();++n){
+    for(unsigned long int n=0;n<outputNames.size();++n){
         int deviceID=outputNames[n].deviceID;
     	outputMenu->Append(OUTPUT_MENU+deviceID, outputNames[n].name, _T("Show about dialog"));
   	}
@@ -766,7 +766,7 @@ void Buttons::StartTone(wxCommandEvent& event)
 	}
    
    int find = -1;
-	for(int n=0;n<sizeof(notelist0)/sizeof(struct NoteList);++n)
+	for(unsigned long int n=0;n<sizeof(notelist0)/sizeof(struct NoteList);++n)
 	{
 		if(!strcmp(noteUpper,notelist0[n].note)){
 			find=n;

@@ -24,6 +24,7 @@ bool MyApp::OnInit()
 
     return true;
 }
+
 //#define CONSOLE22
 #ifdef CONSOLE22
 int main(int, char**)                                           

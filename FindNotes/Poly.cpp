@@ -85,7 +85,7 @@ int Poly::Chighpass(string type,int order,double ripple,double fc)
         return 1;
     }
     
-    float pi=4.0*atan(1.0);
+    double pi=(4.0*atan(1.0));
 
     high(1.0/(2.0*pi),1);
 
@@ -143,15 +143,15 @@ int Poly::Cbandpass(string type,int order,double ripple,double fmin,double fmax)
         return 1;
     }
     
-    float pi=4.0*atan(1.0);
+    double pi=(4.0*atan(1.0));
         
-    float w1=tan(pi*fmin/sampleRate);
+    double w1= tan(pi*fmin/sampleRate);
     
-    float w2=tan(pi*fmax/sampleRate);
+    double w2= tan(pi*fmax/sampleRate);
     
-    float wc=sqrt(w1*w2)/(2.0*pi);
+    double wc= (sqrt(w1*w2)/(2.0*pi));
     
-    float w0=0.5*(w2-w1)/(2.0*pi);
+    double w0= (0.5*(w2-w1)/(2.0*pi));
         
     low(w0,1);
     
@@ -305,9 +305,9 @@ int Poly::forceCascadeRun(float *input,float *output,int npoint,int sum)
         if(y < amin)amin=y;
         
         if(sum){
-            output[n] += y;
+            output[n] += (float)y;
         }else{
-            output[n] = y;
+            output[n] = (float)y;
         }
         
     }
@@ -660,7 +660,7 @@ int Poly::writefilter()
         
         printf("    long cascade=(long)(sizeof(biquad)/sizeof(struct BiQuad));\n\n");
         
-        printf("%s\n","    fprintf(stdout,\"#\\n#      sampleRate \%g cascade \%ld\\n\",sampleRate,cascade);\n\n");
+        printf("%s\n","    fprintf(stdout,\"#\\n#      sampleRate %g cascade %ld\\n\",sampleRate,cascade);\n\n");
         
         printf("    cascaderesponce(&biquad[0],cascade,101);\n\n");
         

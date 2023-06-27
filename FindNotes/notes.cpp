@@ -380,7 +380,7 @@ int Buttons::input( void *outputBuffer, void *inputBuffer, unsigned int nBufferF
 	
 		fftwf_execute(p1);
 				
-		float fmax = -1e33;
+		float fmax = (float)-1e33;
 		int imax=-1;
 		float sum=0;
 		for(int n=0;n<5000;++n){
@@ -513,7 +513,7 @@ Buttons::Buttons(const wxString& title)
 	
 
      wxStaticText *stext=new wxStaticText(this,wxID_STATIC,wxT("Notes: (A0-C8)"),
-          wxPoint(30, 80), wxSize(100, 25),wxALIGN_LEFT);
+          wxPoint(30, 80), wxSize(100, 22),wxALIGN_LEFT);
           
           
     wxCheckBox *check=new wxCheckBox(this,ID_TEXTCTRL,wxT("Show Note"),
@@ -542,7 +542,7 @@ Buttons::Buttons(const wxString& title)
 	
   	printAudioInfo(1);
   	
-    if(idebug)printf("inputNames %lu outputNames %lu\n",inputNames.size(),outputNames.size());
+    if(idebug)printf("inputNames %lu outputNames %lu\n",(long)inputNames.size(),(long)outputNames.size());
 
     wxMenu *menuFile = new wxMenu(_T(""), wxMENU_TEAROFF);
     //menuFile->Append(wxID_OPEN, _T("&Information Audio...\tCtrl-O"), _T("Infomation"));

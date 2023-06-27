@@ -1,0 +1,11 @@
+CXXFLAGS =  -std=c++11 -O2  -I./src/ `/opt/local/Library/Frameworks/wxWidgets.framework/Versions/wxWidgets/3.1/bin/wx-config --cxxflags` -Wall -DMENU_SHIFT=5
+
+CCFILES= ./src/main.cpp ./src/notes.cpp ./src/Poly.cpp
+ 
+CCOBJS = ./src/main.o ./src/notes.o ./src/Poly.o
+
+notesall:  ${COBJS} ${CCOBJS}
+	${CXX} ${CFLAGS} -o FindNotes.x ${COBJS} ${CCOBJS}   -lGLEW `/opt/local/Library/Frameworks/wxWidgets.framework/Versions/wxWidgets/3.1/bin/wx-config  --libs --gl-libs` -lfftw3 -lfftw3f -lrtaudio -lsndfile -lliquid
+	rm ./src/main.o ./src/notes.o ./src/Poly.o
+
+

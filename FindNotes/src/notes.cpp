@@ -276,14 +276,14 @@ void Buttons::OnPaint( wxPaintEvent& WXUNUSED(event) )
 	iyymin=100000000;
 	iyymax= -100000000;
 	
+	int ixold=0;
+	int iyold=0;
 	
 	for(int n=0;n<5000;++n){
 		float sum=buf2[2*n]*buf2[2*n]+buf2[2*n+1]*buf2[2*n+1];
 		if(sum > 0.0)sum=sqrt(sum);
 		double x=n;
 		double y=sum;
-		int ixold;
-		int iyold;
 		int ix;
 		int iy;
 		ix=(int)((x-xmin)*idx/dx+ixmin);
@@ -320,7 +320,6 @@ void Buttons::OnPaint( wxPaintEvent& WXUNUSED(event) )
  
 }
 void Buttons::OnIdle(wxIdleEvent& event){
-	static long int count;
 
 	
 	if(noteListSave >= 0){
@@ -508,11 +507,12 @@ Buttons::Buttons(const wxString& title)
 		p[n]=NULL;
 	}
 	
- 	wxButton *about = new wxButton(this, BUTTON_ABOUT, wxT("About"), wxPoint(30, 20),wxSize(100, 25));
-    wxButton *info = new wxButton(this, BUTTON_INFORMATION, wxT("Information"), wxPoint(30, 50),wxSize(100, 25));
+ 	about = new wxButton(this, BUTTON_ABOUT, wxT("About"), wxPoint(30, 20),wxSize(100, 25));
+ 	
+    info = new wxButton(this, BUTTON_INFORMATION, wxT("Information"), wxPoint(30, 50),wxSize(100, 25));
 	
 
-     wxStaticText *stext=new wxStaticText(this,wxID_STATIC,wxT("Notes: (A0-C8)"),
+     stext=new wxStaticText(this,wxID_STATIC,wxT("Notes: (A0-C8)"),
           wxPoint(30, 80), wxSize(100, 22),wxALIGN_LEFT);
           
           
@@ -531,9 +531,9 @@ Buttons::Buttons(const wxString& title)
 		strings.Add(group[n].name);
 	}
 
- 	wxButton *start = new wxButton(this, BUTTON_START_NOTE, wxT("Start Note"), wxPoint(30, 170),wxSize(100, 25));
+ 	start = new wxButton(this, BUTTON_START_NOTE, wxT("Start Note"), wxPoint(30, 170),wxSize(100, 25));
  	
- 	wxButton *stop = new wxButton(this, BUTTON_STOP_NOTE, wxT("Stop Note"), wxPoint(30, 200),wxSize(100, 25));
+ 	stop = new wxButton(this, BUTTON_STOP_NOTE, wxT("Stop Note"), wxPoint(30, 200),wxSize(100, 25));
 	
 	combo = new wxComboBox(this,ID_COMBOBOX,wxT("Instrument"),
 	 			wxPoint(30, 230),wxSize(100, 22),strings,wxITEM_DROPDOWN);
@@ -561,7 +561,7 @@ Buttons::Buttons(const wxString& title)
         for(long int k=0;k<inputNames[n].sampleRate.size();++k){
             std::stringstream srateName;
             srateName << ((float) (inputNames[n].sampleRate[k]) / 1000.0f) << "kHz";
-            wxMenuItem *itm = subMenu->AppendRadioItem(INPUT_MENU + 10*n + k, srateName.str(), wxT("Description?"));
+            itm = subMenu->AppendRadioItem(INPUT_MENU + 10*n + k, srateName.str(), wxT("Description?"));
         }
     }
    

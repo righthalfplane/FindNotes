@@ -150,5 +150,19 @@ public:
 	
 	int idebug;
 	
+	wxMenuItem *itm;
+
+	wxButton *stop;
+
+	wxButton *info ;
+
+	wxButton *about; 
+
+
+	wxButton *start;
+
+
+	wxStaticText *stext;
+	
 };
 

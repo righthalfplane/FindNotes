@@ -9,4 +9,5 @@ It includes the "Half Freq" option need by some guitars.
 
 ## Videos
 - [Tuning A Guitar Using FindNotes](https://youtu.be/LqapCVu-b2Q)
+- [Trying To Tuning A Guitar By Ear From a Website.](https://youtu.be/XX8Hjm04PQw)
 

@@ -79,6 +79,7 @@ public:
     void OnInputSelect(wxCommandEvent& event);
     void OnOuputSelect(wxCommandEvent& event);
     void OnCheckSelect(wxCommandEvent& event);
+    void OnCheck1Select(wxCommandEvent& event);
     void OnCombo(wxCommandEvent& event);
     int DoFTT(float *BufferIn,float *BufferOut);
 
@@ -143,6 +144,8 @@ public:
 	int polyCount;
 
 	int noteCheckBox;
+		
+	int halfFrequency;
 	
 	double noteWas;
 	

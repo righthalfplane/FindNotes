@@ -79,7 +79,8 @@ sTone::~sTone()
 wxBEGIN_EVENT_TABLE(Buttons, wxFrame)
 EVT_MENU(wxID_EXIT,Buttons::OnQuit)
 EVT_MENU(wxID_ABOUT,Buttons::OnAbout)
-EVT_CHECKBOX(wxID_ANY,Buttons::OnCheckSelect)
+EVT_CHECKBOX(ID_TEXTCTRL,Buttons::OnCheckSelect)
+EVT_CHECKBOX(CHECK_BOX,Buttons::OnCheck1Select)
 EVT_COMBOBOX(ID_COMBOBOX,Buttons::OnCombo)
 EVT_MENU_RANGE(INPUT_MENU,INPUT_MENU+99,Buttons::OnInputSelect)
 EVT_MENU_RANGE(OUTPUT_MENU,OUTPUT_MENU+99,Buttons::OnOuputSelect)
@@ -132,6 +133,12 @@ void Buttons::OnCheckSelect(wxCommandEvent& event){
 	//int item=event.GetId();
 	//printf("OnCheckSelect %d IsChecked %d\n",item,event.IsChecked());
 	noteCheckBox=event.IsChecked();
+}
+
+void Buttons::OnCheck1Select(wxCommandEvent& event){
+	//int item=event.GetId();
+	//printf("OnCheck1Select %d IsChecked %d\n",item,event.IsChecked());
+	halfFrequency=event.IsChecked();
 }
 
 void Buttons::OnInputSelect(wxCommandEvent& event){
@@ -382,7 +389,7 @@ int Buttons::input( void *outputBuffer, void *inputBuffer, unsigned int nBufferF
 		float fmax = (float)-1e33;
 		int imax=-1;
 		float sum=0;
-		for(int n=0;n<5000;++n){
+		for(int n=0;n<5000;++n){  // Search for loudest note (imax)
 			//buf2[2*n]=buf5[2*n];
 			//buf2[2*n+1]=buf5[2*n+1];
 			sum=buf2[2*n]*buf2[2*n]+buf2[2*n+1]*buf2[2*n+1];
@@ -407,7 +414,7 @@ int Buttons::input( void *outputBuffer, void *inputBuffer, unsigned int nBufferF
 		}else{
 			double min=10000;
 			int imin=-1;
-			for(int n=0;n<notelistCount;++n)
+			for(int n=0;n<notelistCount;++n)   // Search for closest table note
 			{
 				double diff=fabs(imax-notelist[n].frequency);
 			      if(diff < min){
@@ -421,19 +428,46 @@ int Buttons::input( void *outputBuffer, void *inputBuffer, unsigned int nBufferF
 				noteListSave=imin;
 				if(idebug)fprintf(stderr,"Frequency %d note %s diff %g fmax %g",
 				       imax,notelist[imin].note,noteListDiff,fmax);				       
-				double v=0;
-				int nn=-10;
-				for(int n=0;n<(int)(0.5*(imax+0.5*imax));++n)
-				{
-					if(buf2[2*n] > v){
-					    v=buf2[2*n];
-					    nn=n;
-					}
-				}
-				//if(v/fmax > 0.1)fprintf(stderr,"lower harmonic %d\n",nn);
-				if(idebug)fprintf(stderr," v %g nn %d ",v/fmax,nn);
 				
+				if(halfFrequency){
+					double v=0;
+					int nimax=-10;
+					int ns=(int)(0.5*imax-3);
+					if(ns < 0)ns=0;
+					for(int n=ns;n<(int)(0.5*imax+3);++n)
+					{
+						sum=buf2[2*n]*buf2[2*n]+buf2[2*n+1]*buf2[2*n+1];
+						if(sum > 0.0)sum=sqrt(sum);
+						if(sum > v){
+							v=sum;
+							nimax=n;
+						}
+					}
+				
+				
+					if(v/fmax > 0.1){
+						//fprintf(stderr,"lower harmonic %d\n",nimax);
+						min=10000;
+						imin=-1;
+						for(int n=0;n<notelistCount;++n)   // Search for closest table note
+						{
+							double diff=fabs(nimax-notelist[n].frequency);
+							if(diff < min){
+								 noteListDiff=nimax-notelist[n].frequency;
+								 min=diff;
+								 imin=n;
+							}
+						}
+						if(imin >= 0){
+							noteListSave=imin;
+						}
+					}
+					
+					if(idebug)fprintf(stderr," v %g nimax %d ",v/fmax,nimax);
+				}
 			}
+			
+			
 /*
 			if(nodeGroup > 0){
 				double amin=1e33;
@@ -486,6 +520,8 @@ Buttons::Buttons(const wxString& title)
 	plotLocation=NULL;
 	
 	whiteNoise=0;
+		
+	halfFrequency=0;
 	
 	idebug=0;
 	
@@ -516,12 +552,17 @@ Buttons::Buttons(const wxString& title)
           wxPoint(30, 80), wxSize(100, 22),wxALIGN_LEFT);
           
           
+	
     wxCheckBox *check=new wxCheckBox(this,ID_TEXTCTRL,wxT("Show Note"),
-         wxPoint(30, 110), wxSize(100, 25));
+         wxPoint(30, 100), wxSize(100, 25));
 	check->SetValue(noteCheckBox);
 	
+    wxCheckBox *check1=new wxCheckBox(this,CHECK_BOX,wxT("Half Freq"),
+         wxPoint(30, 120), wxSize(100, 25));
+	check1->SetValue(halfFrequency);
+	
     text=new wxTextCtrl(this,ID_TEXTCTRL,wxT("A3"),
-         wxPoint(30, 140), wxSize(100, 25));
+         wxPoint(30, 145), wxSize(100, 25));
 	
 	
 	wxArrayString strings;
@@ -531,16 +572,16 @@ Buttons::Buttons(const wxString& title)
 		strings.Add(group[n].name);
 	}
 
- 	start = new wxButton(this, BUTTON_START_NOTE, wxT("Start Note"), wxPoint(30, 170),wxSize(100, 25));
+ 	start = new wxButton(this, BUTTON_START_NOTE, wxT("Start Note"), wxPoint(30, 175),wxSize(100, 25));
  	
- 	stop = new wxButton(this, BUTTON_STOP_NOTE, wxT("Stop Note"), wxPoint(30, 200),wxSize(100, 25));
+ 	stop = new wxButton(this, BUTTON_STOP_NOTE, wxT("Stop Note"), wxPoint(30, 205),wxSize(100, 25));
  	
 #ifdef BREW
 	combo = new wxComboBox(this,ID_COMBOBOX,wxT("Instrument"),
-	 			wxPoint(30, 230),wxSize(100, 20),strings,wxITEM_DROPDOWN);
+	 			wxPoint(30, 235),wxSize(100, 20),strings,wxITEM_DROPDOWN);
 #else
 	combo = new wxComboBox(this,ID_COMBOBOX,wxT("Instrument"),
-	 			wxPoint(30, 230),wxSize(100, 22),strings,wxITEM_DROPDOWN);
+	 			wxPoint(30, 235),wxSize(100, 22),strings,wxITEM_DROPDOWN);
 #endif
 	 			
 	combo->SetSelection(0);

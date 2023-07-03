@@ -1,0 +1,13 @@
+
+
+/opt/homebrew/bin/brew install git cmake libsndfile itpp portaudio
+/opt/homebrew/bin/brew install --HEAD mbelib
+git clone git@github.com:LouisErigHerve/dsd.git
+cd dsd
+mkdir build
+cd build
+/opt/homebrew/bin/cmake ../
+make -j 8
+sudo make install
+
+
